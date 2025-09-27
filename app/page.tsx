@@ -1,486 +1,284 @@
-"use client";
-
-import React, { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { motion, useScroll, useTransform, useInView, useSpring } from "framer-motion";
-import { 
-  Globe, 
-  Search, 
-  Bot, 
-  Star, 
-  Users, 
-  TrendingUp, 
-  Award,
+import Link from "next/link"
+import {
   ArrowRight,
-  CheckCircle,
+  CheckCircle2,
+  Compass,
+  MessageSquare,
+  Rocket,
   Sparkles,
-  Zap,
   Target,
-  BarChart3,
-  Smartphone,
-  MessageSquare
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
+  TrendingUp,
+  Wand2,
+  Workflow,
+} from "lucide-react"
 
-// Utility function for className merging
-function cn(...classes: (string | undefined | null | false)[]): string {
-  return classes.filter(Boolean).join(' ');
-}
+const heroHighlights = [
+  {
+    title: "Websites that convert",
+    description: "High-performing designs tailored to how your neighbours actually search and buy.",
+  },
+  {
+    title: "Local-first strategy",
+    description: "SEO, automations, and nurture campaigns engineered for Upstate New York small businesses.",
+  },
+  {
+    title: "Hands-on partners",
+    description: "You work directly with the team shipping your project – no handoffs, no guesswork.",
+  },
+]
 
-// Floating Paths Component
-function FloatingPaths({ position }: { position: number }) {
-  const paths = Array.from({ length: 36 }, (_, i) => ({
-    id: i,
-    d: `M-${380 - i * 5 * position} -${189 + i * 6}C-${
-      380 - i * 5 * position
-    } -${189 + i * 6} -${312 - i * 5 * position} ${216 - i * 6} ${
-      152 - i * 5 * position
-    } ${343 - i * 6}C${616 - i * 5 * position} ${470 - i * 6} ${
-      684 - i * 5 * position
-    } ${875 - i * 6} ${684 - i * 5 * position} ${875 - i * 6}`,
-    color: `rgba(15,23,42,${0.1 + i * 0.03})`,
-    width: 0.5 + i * 0.03,
-  }));
+const services = [
+  {
+    icon: <Sparkles className="h-6 w-6" />,
+    title: "Signature websites",
+    description:
+      "From the first wireframe to launch, we craft fast, accessible websites designed to win enquiries and repeat bookings.",
+  },
+  {
+    icon: <TrendingUp className="h-6 w-6" />,
+    title: "Local SEO & content",
+    description:
+      "Rank for the services that matter. We handle listings, review flows, and keyword-rich content that keeps you visible.",
+  },
+  {
+    icon: <Workflow className="h-6 w-6" />,
+    title: "Automation sprints",
+    description:
+      "Tidy your tech stack with AI-assisted workflows that respond to leads, qualify prospects, and follow up automatically.",
+  },
+]
 
+const results = [
+  { value: "42%", label: "Average lift in qualified enquiries" },
+  { value: "12d", label: "Typical turnaround for launch-ready sites" },
+  { value: "30+", label: "Local businesses supported since 2022" },
+  { value: "95%", label: "Clients on an ongoing growth plan" },
+]
+
+const process = [
+  {
+    step: "01",
+    title: "Discover",
+    description:
+      "We unpack your goals, audit existing assets, and map the competitive landscape so the strategy matches your reality.",
+  },
+  {
+    step: "02",
+    title: "Design & build",
+    description:
+      "Content, visuals, and development move together. You preview every milestone in a collaborative workspace.",
+  },
+  {
+    step: "03",
+    title: "Launch",
+    description:
+      "SEO, analytics, and automations are switched on from day one. We stick around to monitor performance and iterate.",
+  },
+  {
+    step: "04",
+    title: "Grow",
+    description:
+      "Monthly experiments, reporting, and strategy sessions keep the pipeline warm and your website improving.",
+  },
+]
+
+const testimonials = [
+  {
+    quote:
+      "SaltedPixel took our dated site and rebuilt it in three weeks. We went from invisible on Google to booking out our schedule.",
+    name: "Danielle Whitaker",
+    role: "Owner, Riverbend Wellness",
+  },
+  {
+    quote:
+      "They feel like an extension of our in-house team. The automations they set up reply to leads faster than we ever could.",
+    name: "Miguel Ortiz",
+    role: "Director, Southern Tier Events",
+  },
+]
+
+export default function HomePage() {
   return (
-    <div className="absolute inset-0 pointer-events-none">
-      <svg
-        className="w-full h-full text-slate-950 dark:text-white"
-        viewBox="0 0 696 316"
-        fill="none"
-      >
-        <title>Background Paths</title>
-        {paths.map((path) => (
-          <motion.path
-            key={path.id}
-            d={path.d}
-            stroke="currentColor"
-            strokeWidth={path.width}
-            strokeOpacity={0.1 + path.id * 0.03}
-            initial={{ pathLength: 0.3, opacity: 0.6 }}
-            animate={{
-              pathLength: 1,
-              opacity: [0.3, 0.6, 0.3],
-              pathOffset: [0, 1, 0],
-            }}
-            transition={{
-              duration: 20 + Math.random() * 10,
-              repeat: Number.POSITIVE_INFINITY,
-              ease: "linear",
-            }}
-          />
-        ))}
-      </svg>
-    </div>
-  );
-}
-
-// Service Item Component
-interface ServiceItemProps {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  delay: number;
-}
-
-function ServiceItem({ icon, title, description, delay }: ServiceItemProps) {
-  return (
-    <motion.div
-      className="flex flex-col items-center text-center p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 group hover:bg-white/10 transition-all duration-300"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay }}
-      whileHover={{ y: -5, transition: { duration: 0.2 } }}
-    >
-      <motion.div
-        className="text-blue-400 bg-blue-400/10 p-4 rounded-lg mb-4 group-hover:bg-blue-400/20 transition-colors duration-300"
-        whileHover={{ rotate: [0, -10, 10, -5, 0], transition: { duration: 0.5 } }}
-      >
-        {icon}
-      </motion.div>
-      <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-blue-300 transition-colors duration-300">
-        {title}
-      </h3>
-      <p className="text-gray-300 leading-relaxed">
-        {description}
-      </p>
-    </motion.div>
-  );
-}
-
-// Stat Counter Component
-interface StatCounterProps {
-  icon: React.ReactNode;
-  value: number;
-  label: string;
-  suffix: string;
-  delay: number;
-}
-
-function StatCounter({ icon, value, label, suffix, delay }: StatCounterProps) {
-  const countRef = useRef(null);
-  const isInView = useInView(countRef, { once: false });
-  const [hasAnimated, setHasAnimated] = useState(false);
-
-  const springValue = useSpring(0, {
-    stiffness: 50,
-    damping: 10,
-  });
-
-  useEffect(() => {
-    if (isInView && !hasAnimated) {
-      springValue.set(value);
-      setHasAnimated(true);
-    } else if (!isInView && hasAnimated) {
-      springValue.set(0);
-      setHasAnimated(false);
-    }
-  }, [isInView, value, springValue, hasAnimated]);
-
-  const displayValue = useTransform(springValue, (latest) => Math.floor(latest));
-
-  return (
-    <motion.div
-      className="bg-white/5 backdrop-blur-sm p-6 rounded-xl flex flex-col items-center text-center group hover:bg-white/10 transition-colors duration-300 border border-white/10"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay }}
-      whileHover={{ y: -5, transition: { duration: 0.2 } }}
-    >
-      <motion.div
-        className="w-14 h-14 rounded-full bg-blue-400/10 flex items-center justify-center mb-4 text-blue-400 group-hover:bg-blue-400/20 transition-colors duration-300"
-        whileHover={{ rotate: 360, transition: { duration: 0.8 } }}
-      >
-        {icon}
-      </motion.div>
-      <motion.div ref={countRef} className="text-3xl font-bold text-white flex items-center">
-        <motion.span>{displayValue}</motion.span>
-        <span>{suffix}</span>
-      </motion.div>
-      <p className="text-gray-300 text-sm mt-1">{label}</p>
-      <motion.div className="w-10 h-0.5 bg-blue-400 mt-3 group-hover:w-16 transition-all duration-300" />
-    </motion.div>
-  );
-}
-
-// Main SaltedPixel Website Component
-function SaltedPixelWebsite() {
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(sectionRef, { once: false, amount: 0.1 });
-  const isStatsInView = useInView(statsRef, { once: false, amount: 0.3 });
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, 50]);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
-  const services = [
-    {
-      icon: <Globe className="w-8 h-8" />,
-      title: "Modern Website Design",
-      description: "Mobile-friendly, professional websites that make your business stand out from the competition with modern design principles."
-    },
-    {
-      icon: <Search className="w-8 h-8" />,
-      title: "Local SEO Optimization",
-      description: "Ensure customers actually find you online with strategic local SEO that puts your business on the map."
-    },
-    {
-      icon: <Bot className="w-8 h-8" />,
-      title: "AI-Powered Automation",
-      description: "Automate bookings, reviews, and content creation with intelligent AI tools that work around the clock."
-    },
-    {
-      icon: <Smartphone className="w-8 h-8" />,
-      title: "Mobile-First Approach",
-      description: "Every website we build is optimized for mobile devices, ensuring perfect performance on all screen sizes."
-    },
-    {
-      icon: <MessageSquare className="w-8 h-8" />,
-      title: "Content Strategy",
-      description: "Strategic content creation and management that engages your audience and drives conversions."
-    },
-    {
-      icon: <BarChart3 className="w-8 h-8" />,
-      title: "Analytics & Growth",
-      description: "Track your success with detailed analytics and ongoing optimization to maximize your ROI."
-    }
-  ];
-
-  const stats = [
-    { icon: <Target />, value: 150, label: "Local Businesses Helped", suffix: "+" },
-    { icon: <TrendingUp />, value: 300, label: "Average Traffic Increase", suffix: "%" },
-    { icon: <Star />, value: 98, label: "Client Satisfaction Rate", suffix: "%" },
-    { icon: <Award />, value: 24, label: "Months Support Included", suffix: "" },
-  ];
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0">
-        <FloatingPaths position={1} />
-        <FloatingPaths position={-1} />
-      </div>
-
-      {/* Decorative background elements */}
-      <motion.div
-        className="absolute top-20 left-10 w-64 h-64 rounded-full bg-blue-500/5 blur-3xl"
-        style={{ y: y1 }}
-      />
-      <motion.div
-        className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-purple-500/5 blur-3xl"
-        style={{ y: y2 }}
-      />
-
-      {/* Navigation */}
-     <nav className="relative z-50 flex items-center justify-between p-6">
-  {/* Logo + Navigation Links together on the left */}
-  <motion.div
-    className="flex items-center space-x-8"
-    initial={{ opacity: 0, x: -20 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.6 }}
-  >
-    {/* Logo */}
-    <div className="flex items-center space-x-2">
-      <div className="w-10 h-10 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg flex items-center justify-center">
-        <Sparkles className="w-6 h-6 text-white" />
-      </div>
-      <span className="text-xl font-bold">SaltedPixel</span>
-    </div>
-
-    {/* Navigation links (moved left) */}
-    <div className="hidden md:flex items-center space-x-8">
-      <Link href="/services" className="text-gray-300 hover:text-white transition-colors">
-        Services
-      </Link>
-      <Link href="/about" className="text-gray-300 hover:text-white transition-colors">
-        About
-      </Link>
-      <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">
-        Contact
-      </Link>
-    </div>
-  </motion.div>
-
-  {/* "Get Started" button stays on the far right */}
-  <motion.div
-    initial={{ opacity: 0, x: 20 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.6, delay: 0.4 }}
-  >
-    <Button
-      asChild
-      className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
-    >
-      <Link href="/get-started" className="flex items-center gap-2">
-        Get Started
-        <ArrowRight className="w-4 h-4" />
-      </Link>
-    </Button>
-  </motion.div>
-</nav>
-
-      {/* Hero Section */}
-      <section ref={sectionRef} className="relative z-10 container mx-auto px-4 pt-20 pb-32">
-        <motion.div
-          className="text-center max-w-4xl mx-auto"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <motion.div
-            className="inline-flex items-center px-4 py-2 rounded-full bg-white/5 backdrop-blur-sm mb-8 border border-white/10"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <Zap className="w-4 h-4 mr-2 text-blue-400" />
-            <span className="text-sm font-medium">Complete Growth Systems for Small Business</span>
-          </motion.div>
-
-          <motion.h1
-            className="text-5xl sm:text-6xl md:text-7xl font-bold mb-8 tracking-tight"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-500 to-blue-400">
-              We Don't Just Build
-            </span>
-            <span className="block text-white">
-              Websites
-            </span>
-          </motion.h1>
-
-          <motion.p
-            className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-          >
-            SaltedPixel creates complete growth systems combining modern website design, local SEO, and AI automation. 
-            Unlike other developers who disappear after delivery, we provide ongoing support to keep your business ahead of the competition.
-          </motion.p>
-
-          <motion.div
-            className="flex flex-col sm:flex-row items-center justify-center gap-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.0 }}
-          >
-            <Button
-              asChild
-              size="lg"
-              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-8 py-4 text-lg"
-            >
-              <Link href="/growth-system" className="flex items-center gap-2">
-                Start Your Growth Journey
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-white/20 text-white hover:bg-white/10 px-8 py-4 text-lg"
-            >
-              <Link href="/work" className="flex items-center gap-2">
-                <Star className="w-5 h-5 text-blue-300" />
-                View Our Work
-              </Link>
-            </Button>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* Services Section */}
-      <section id="services" className="relative z-10 container mx-auto px-4 py-20">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-              Three Essential Services
-            </span>
-            <br />
-            <span className="text-white">One Complete System</span>
-          </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            We combine website design, SEO, and AI automation into one powerful growth system 
-            that gives small businesses the professional presence of enterprise companies.
+    <main className="bg-slate-950 text-white">
+      <section className="relative isolate overflow-hidden">
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-blue-950/40 via-slate-950 to-slate-950" aria-hidden />
+        <div className="absolute left-1/2 top-20 -z-10 h-80 w-[40rem] -translate-x-1/2 rounded-full bg-blue-500/20 blur-[120px]" aria-hidden />
+        <div className="mx-auto max-w-5xl px-6 pb-24 pt-28 text-center sm:pt-32">
+          <p className="text-sm font-semibold uppercase tracking-[0.4em] text-blue-200/80">Binghamton born. Building nationwide.</p>
+          <h1 className="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+            Modern websites and growth systems for local businesses ready to scale
+          </h1>
+          <p className="mt-6 text-lg text-slate-200 sm:text-xl">
+            SaltedPixel combines design, development, and automation under one roof so your small business can look world-class
+            without the agency runaround.
           </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <ServiceItem
-              key={index}
-              icon={service.icon}
-              title={service.title}
-              description={service.description}
-              delay={index * 0.2}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section ref={statsRef} className="relative z-10 container mx-auto px-4 py-20">
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isStatsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-            Proven Results for Local Business
-          </h2>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            As Binghamton University School of Management students, we understand both technology and business.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {stats.map((stat, index) => (
-            <StatCounter
-              key={index}
-              icon={stat.icon}
-              value={stat.value}
-              label={stat.label}
-              suffix={stat.suffix}
-              delay={index * 0.1}
-            />
-          ))}
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative z-10 container mx-auto px-4 py-20">
-        <motion.div
-          className="bg-gradient-to-r from-blue-600/20 to-purple-600/20 backdrop-blur-sm p-12 rounded-2xl border border-white/10 text-center"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isStatsInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-        >
-          <h3 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-            Ready to Transform Your Business?
-          </h3>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Get the professional online presence of a big brand at an affordable price, 
-            with ongoing support that keeps you ahead of the competition.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Button
-              asChild
-              size="lg"
-              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-8 py-4 text-lg"
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <Link
+              href="/get-started"
+              className="inline-flex items-center gap-2 rounded-full bg-blue-500 px-6 py-3 text-base font-semibold text-white transition hover:bg-blue-400"
             >
-              <Link href="/consultation" className="flex items-center gap-2">
-                Get Your Free Consultation
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </Button>
-            <div className="flex items-center text-gray-300">
-              <CheckCircle className="w-5 h-5 mr-2 text-green-400" />
-              <span>No commitment required</span>
-            </div>
+              Start a project
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+            <Link
+              href="/work"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-6 py-3 text-base font-semibold text-slate-200 transition hover:border-blue-400 hover:text-white"
+            >
+              See our work
+            </Link>
           </div>
-        </motion.div>
-      </section>
-
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-white/10 py-12">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row items-center justify-between">
-            <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
+          <div className="mt-14 grid gap-6 text-left md:grid-cols-3">
+            {heroHighlights.map((highlight) => (
+              <div key={highlight.title} className="rounded-2xl border border-white/10 bg-white/5 p-6">
+                <h2 className="flex items-center gap-2 text-base font-semibold text-white">
+                  <CheckCircle2 className="h-5 w-5 text-blue-300" />
+                  {highlight.title}
+                </h2>
+                <p className="mt-3 text-sm text-slate-200">{highlight.description}</p>
               </div>
-              <span className="text-lg font-bold">SaltedPixel</span>
-            </div>
-            <div className="text-gray-400 text-sm">
-              © 2024 SaltedPixel. Binghamton University School of Management Students.
-            </div>
+            ))}
           </div>
         </div>
-      </footer>
-    </div>
-  );
-}
+      </section>
 
-export default function SaltedPixelDemo() {
-  return <SaltedPixelWebsite />;
+      <section className="border-t border-white/10 bg-slate-900/40 py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-blue-200/70">Services</p>
+              <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">Everything you need to grow locally</h2>
+            </div>
+            <Link
+              href="/services"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-blue-200 transition hover:text-white"
+            >
+              Explore our services
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {services.map((service) => (
+              <article
+                key={service.title}
+                className="rounded-2xl border border-white/10 bg-white/5 p-6 transition duration-200 hover:-translate-y-1 hover:border-blue-400/60 hover:bg-white/10"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/10 text-blue-300">{service.icon}</div>
+                <h3 className="mt-6 text-xl font-semibold text-white">{service.title}</h3>
+                <p className="mt-3 text-sm text-slate-200">{service.description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+            <div>
+              <p className="text-sm uppercase tracking-[0.3em] text-blue-200/70">Proven results</p>
+              <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">
+                We partner with founders to remove guesswork and keep the growth flywheel spinning
+              </h2>
+              <p className="mt-6 text-base text-slate-200">
+                Every engagement blends design, engineering, and marketing fundamentals. The result: launch-ready digital assets
+                paired with automations that capture and nurture demand while you focus on the work you love.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3 text-sm text-slate-300">
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-2">
+                  <Target className="h-4 w-4 text-blue-300" />
+                  Conversion-focused UX
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-2">
+                  <MessageSquare className="h-4 w-4 text-blue-300" />
+                  Automated follow-up
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-2">
+                  <Compass className="h-4 w-4 text-blue-300" />
+                  Local search visibility
+                </span>
+              </div>
+            </div>
+            <dl className="grid gap-6 sm:grid-cols-2">
+              {results.map((result) => (
+                <div
+                  key={result.label}
+                  className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center transition duration-200 hover:border-blue-400/60 hover:bg-white/10"
+                >
+                  <dt className="text-3xl font-semibold text-white">{result.value}</dt>
+                  <dd className="mt-3 text-sm text-slate-200">{result.label}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-slate-900/30 py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <p className="text-sm uppercase tracking-[0.3em] text-blue-200/70">How we work</p>
+          <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">A collaborative process designed for momentum</h2>
+          <ol className="mt-12 grid gap-8 lg:grid-cols-4">
+            {process.map((item) => (
+              <li key={item.step} className="flex flex-col rounded-2xl border border-white/10 bg-white/5 p-6">
+                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-500/10 text-lg font-semibold text-blue-200">
+                  {item.step}
+                </span>
+                <h3 className="mt-6 text-xl font-semibold text-white">{item.title}</h3>
+                <p className="mt-3 text-sm text-slate-200">{item.description}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="py-20">
+        <div className="mx-auto max-w-5xl px-6 text-center">
+          <p className="text-sm uppercase tracking-[0.3em] text-blue-200/70">Client stories</p>
+          <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">Local teams seeing national-level results</h2>
+          <div className="mt-12 grid gap-6 md:grid-cols-2">
+            {testimonials.map((testimonial) => (
+              <figure
+                key={testimonial.name}
+                className="rounded-2xl border border-white/10 bg-white/5 p-6 text-left transition duration-200 hover:border-blue-400/60 hover:bg-white/10"
+              >
+                <Wand2 className="h-5 w-5 text-blue-300" />
+                <blockquote className="mt-4 text-base text-slate-200">“{testimonial.quote}”</blockquote>
+                <figcaption className="mt-6 text-sm text-slate-400">
+                  <span className="font-semibold text-white">{testimonial.name}</span>
+                  <span className="mx-2">•</span>
+                  {testimonial.role}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t border-white/10 bg-slate-900/40 py-20">
+        <div className="mx-auto max-w-4xl px-6 text-center">
+          <p className="text-sm uppercase tracking-[0.3em] text-blue-200/70">Ready when you are</p>
+          <h2 className="mt-4 text-3xl font-semibold sm:text-4xl">Let’s build your next growth channel</h2>
+          <p className="mt-6 text-base text-slate-200">
+            Whether you need a full rebuild or you are finally ready to automate the busywork, our team will put together a
+            roadmap tailored to your goals.
+          </p>
+          <div className="mt-10 flex flex-wrap justify-center gap-4">
+            <Link
+              href="/consultation"
+              className="inline-flex items-center gap-2 rounded-full bg-blue-500 px-6 py-3 text-base font-semibold text-white transition hover:bg-blue-400"
+            >
+              Book a consultation
+              <Rocket className="h-5 w-5" />
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-6 py-3 text-base font-semibold text-slate-200 transition hover:border-blue-400 hover:text-white"
+            >
+              Talk with the team
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
+  )
 }
