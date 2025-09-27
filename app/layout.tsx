@@ -4,13 +4,10 @@ export const metadata = {
 };
 
 import "./../styles/globals.css";
-import { MainNav } from "@/components/main-nav";
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="relative min-h-screen bg-background text-foreground">
-        <MainNav />
         {children}
       </body>
     </html>
