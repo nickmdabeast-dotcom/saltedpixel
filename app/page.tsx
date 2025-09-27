@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { motion, useScroll, useTransform, useInView, useSpring } from "framer-motion";
 import { 
   Globe, 
@@ -259,9 +260,15 @@ function SaltedPixelWebsite() {
 
     {/* Navigation links (moved left) */}
     <div className="hidden md:flex items-center space-x-8">
-      <a href="#services" className="text-gray-300 hover:text-white transition-colors">Services</a>
-      <a href="#about" className="text-gray-300 hover:text-white transition-colors">About</a>
-      <a href="#contact" className="text-gray-300 hover:text-white transition-colors">Contact</a>
+      <Link href="/services" className="text-gray-300 hover:text-white transition-colors">
+        Services
+      </Link>
+      <Link href="/about" className="text-gray-300 hover:text-white transition-colors">
+        About
+      </Link>
+      <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">
+        Contact
+      </Link>
     </div>
   </motion.div>
 
@@ -271,8 +278,14 @@ function SaltedPixelWebsite() {
     animate={{ opacity: 1, x: 0 }}
     transition={{ duration: 0.6, delay: 0.4 }}
   >
-    <Button className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700">
-      Get Started
+    <Button
+      asChild
+      className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+    >
+      <Link href="/get-started" className="flex items-center gap-2">
+        Get Started
+        <ArrowRight className="w-4 h-4" />
+      </Link>
     </Button>
   </motion.div>
 </nav>
@@ -325,19 +338,26 @@ function SaltedPixelWebsite() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.0 }}
           >
-            <Button 
-              size="lg" 
+            <Button
+              asChild
+              size="lg"
               className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-8 py-4 text-lg"
             >
-              Start Your Growth Journey
-              <ArrowRight className="w-5 h-5 ml-2" />
+              <Link href="/growth-system" className="flex items-center gap-2">
+                Start Your Growth Journey
+                <ArrowRight className="w-5 h-5" />
+              </Link>
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
               className="border-white/20 text-white hover:bg-white/10 px-8 py-4 text-lg"
             >
-              View Our Work
+              <Link href="/work" className="flex items-center gap-2">
+                <Star className="w-5 h-5 text-blue-300" />
+                View Our Work
+              </Link>
             </Button>
           </motion.div>
         </motion.div>
@@ -423,12 +443,15 @@ function SaltedPixelWebsite() {
             with ongoing support that keeps you ahead of the competition.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Button 
-              size="lg" 
+            <Button
+              asChild
+              size="lg"
               className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-8 py-4 text-lg"
             >
-              Get Your Free Consultation
-              <ArrowRight className="w-5 h-5 ml-2" />
+              <Link href="/consultation" className="flex items-center gap-2">
+                Get Your Free Consultation
+                <ArrowRight className="w-5 h-5" />
+              </Link>
             </Button>
             <div className="flex items-center text-gray-300">
               <CheckCircle className="w-5 h-5 mr-2 text-green-400" />

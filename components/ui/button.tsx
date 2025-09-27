@@ -3,12 +3,22 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.HTMLAttributes<HTMLElement> {
   variant?: "default" | "outline";
   size?: "sm" | "lg";
+  asChild?: boolean;
+  type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
 }
 
-export function Button({ className, variant = "default", size = "sm", ...props }: ButtonProps) {
+export function Button({
+  className,
+  variant = "default",
+  size = "sm",
+  asChild = false,
+  children,
+  type = "button",
+  ...props
+}: ButtonProps) {
   const base =
     "inline-flex items-center justify-center rounded-xl font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
 
@@ -22,7 +32,18 @@ export function Button({ className, variant = "default", size = "sm", ...props }
     lg: "px-6 py-3 text-lg"
   };
 
+  const classes = cn(base, variants[variant], sizes[size], className);
+
+  if (asChild && React.isValidElement(children)) {
+    return React.cloneElement(children, {
+      className: cn(classes, children.props.className),
+      ...props,
+    });
+  }
+
   return (
-    <button className={cn(base, variants[variant], sizes[size], className)} {...props} />
+    <button className={classes} type={type} {...props}>
+      {children}
+    </button>
   );
 }
