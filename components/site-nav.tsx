@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 export function SiteNav() {
   return (
-    <nav className="relative z-50 flex items-center justify-between p-6">
+    <nav className="relative z-50 mx-6 mt-6 flex items-center justify-between rounded-full border border-white/15 bg-white/10 px-6 py-4 text-white shadow-lg backdrop-blur-xl">
       <motion.div
         className="flex items-center space-x-8"
         initial={{ opacity: 0, x: -20 }}
@@ -19,17 +19,17 @@ export function SiteNav() {
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-blue-400 to-purple-500">
             <Sparkles className="h-6 w-6 text-white" />
           </div>
-          <span className="text-xl font-bold">SaltedPixel</span>
+          <span className="text-xl font-bold text-white">SaltedPixel</span>
         </Link>
 
         <div className="hidden items-center space-x-8 md:flex">
-          <Link href="/services" className="text-gray-300 transition-colors hover:text-white">
+          <Link href="/services" className="text-gray-100 transition-colors hover:text-white">
             Services
           </Link>
-          <Link href="/about" className="text-gray-300 transition-colors hover:text-white">
+          <Link href="/about" className="text-gray-100 transition-colors hover:text-white">
             About
           </Link>
-          <Link href="/contact" className="text-gray-300 transition-colors hover:text-white">
+          <Link href="/contact" className="text-gray-100 transition-colors hover:text-white">
             Contact
           </Link>
         </div>
