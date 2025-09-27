@@ -8,10 +8,18 @@ import { Button } from "@/components/ui/button";
 
 export function SiteNav() {
   return (
-    <nav className="relative z-50 mx-6 mt-6 flex items-center justify-between overflow-hidden rounded-full border border-white/10 bg-white/5 px-6 py-4 text-white shadow-[0_25px_55px_-30px_rgba(15,23,42,0.9)] backdrop-blur-2xl">
+    <nav className="relative z-50 mx-6 mt-6 flex items-center justify-between gap-6 overflow-hidden rounded-full border border-white/15 bg-slate-900/30 px-6 py-4 text-white shadow-[0_28px_65px_-32px_rgba(15,23,42,0.95)] backdrop-blur-3xl">
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.25),transparent_45%)]"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.25),transparent_55%)]"
+      />
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-20 bg-[linear-gradient(120deg,rgba(15,23,42,0.65),rgba(15,23,42,0.35))] opacity-90"
+      />
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-x-10 -top-24 h-48 rounded-full bg-[radial-gradient(circle,rgba(236,72,153,0.25),transparent_70%)] opacity-60"
       />
       <motion.div
         className="relative z-10 flex items-center space-x-8"
@@ -47,7 +55,7 @@ export function SiteNav() {
       >
         <Button
           asChild
-          className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+          className="border border-white/20 bg-white/10 text-white transition-colors hover:border-white/40 hover:bg-white/20"
         >
           <Link href="/get-started" className="flex items-center gap-2">
             Get Started
