@@ -40,14 +40,22 @@ export function MarketingPage({
 }: MarketingPageProps) {
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-white">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-blue-500/20 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-96 w-96 translate-x-1/3 bg-purple-500/20 blur-3xl" />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -top-56 left-1/2 h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-blue-500/25 blur-[140px]" />
+        <div className="absolute bottom-[-20%] right-[-5%] h-[30rem] w-[30rem] rounded-full bg-purple-500/25 blur-[140px]" />
+        <div className="absolute inset-0 opacity-70 mix-blend-screen [mask-image:radial-gradient(circle_at_center,rgba(0,0,0,0.75),transparent_70%)]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.25),transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,_rgba(168,85,247,0.2),transparent_65%)]" />
+        </div>
+        <div className="absolute inset-0 opacity-20 [mask-image:linear-gradient(to_bottom,rgba(0,0,0,0)_0%,rgba(0,0,0,1)_20%,rgba(0,0,0,1)_80%,rgba(0,0,0,0)_100%)]">
+          <div className="absolute inset-0 bg-[conic-gradient(from_120deg_at_50%_50%,rgba(148,163,184,0.2),transparent_60%,rgba(148,163,184,0.2))]" />
+        </div>
+        <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       </div>
 
       <div className="relative">
-        <div className="container mx-auto px-4 pb-16 pt-24">
-          <div className="max-w-3xl">
+        <div className="container mx-auto px-4 pb-16 pt-32">
+          <div className="max-w-4xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-sky-200">
               {eyebrow}
             </span>
@@ -85,12 +93,12 @@ export function MarketingPage({
           </div>
         </div>
 
-        <div className="container mx-auto px-4 pb-24">
+        <div className="container mx-auto px-4 pb-32">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {highlights.map((highlight, index) => (
               <div
                 key={index}
-                className="group rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
+                className="group rounded-2xl border border-white/10 bg-white/5 p-6 shadow-[0_25px_45px_-35px_rgba(15,23,42,1)] backdrop-blur-lg transition-all duration-300 hover:-translate-y-1.5 hover:border-white/30 hover:bg-white/10"
               >
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 text-blue-300">
                   {highlight.icon}

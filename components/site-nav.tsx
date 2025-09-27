@@ -8,9 +8,13 @@ import { Button } from "@/components/ui/button";
 
 export function SiteNav() {
   return (
-    <nav className="relative z-50 mx-6 mt-6 flex items-center justify-between rounded-full border border-white/15 bg-white/10 px-6 py-4 text-white shadow-lg backdrop-blur-xl">
+    <nav className="relative z-50 mx-6 mt-6 flex items-center justify-between overflow-hidden rounded-full border border-white/10 bg-white/5 px-6 py-4 text-white shadow-[0_25px_55px_-30px_rgba(15,23,42,0.9)] backdrop-blur-2xl">
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(96,165,250,0.25),transparent_45%)]"
+      />
       <motion.div
-        className="flex items-center space-x-8"
+        className="relative z-10 flex items-center space-x-8"
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
@@ -23,19 +27,20 @@ export function SiteNav() {
         </Link>
 
         <div className="hidden items-center space-x-8 md:flex">
-          <Link href="/services" className="text-gray-100 transition-colors hover:text-white">
+          <Link href="/services" className="text-white/80 transition-colors hover:text-white">
             Services
           </Link>
-          <Link href="/about" className="text-gray-100 transition-colors hover:text-white">
+          <Link href="/about" className="text-white/80 transition-colors hover:text-white">
             About
           </Link>
-          <Link href="/contact" className="text-gray-100 transition-colors hover:text-white">
+          <Link href="/contact" className="text-white/80 transition-colors hover:text-white">
             Contact
           </Link>
         </div>
       </motion.div>
 
       <motion.div
+        className="relative z-10"
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
