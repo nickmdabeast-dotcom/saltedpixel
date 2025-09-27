@@ -224,7 +224,7 @@ function SaltedPixelWebsite() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden bg-[linear-gradient(to_bottom,#0a1a3f,#132b63_60%,rgba(5,11,23,0.95))] text-white">
       {/* Background Effects */}
       <div className="absolute inset-0">
         <FloatingPaths position={1} />
