@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import SiteNav from "@/components/site-nav";
 
 interface CtaLink {
   label: string;
@@ -46,6 +47,7 @@ export function MarketingPage({
       </div>
 
       <div className="relative">
+        <SiteNav />
         <div className="container mx-auto px-4 pb-16 pt-24">
           <div className="max-w-3xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-sky-200">
