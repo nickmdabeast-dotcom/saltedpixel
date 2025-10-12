@@ -28,6 +28,7 @@ interface MarketingPageProps {
   secondaryCta?: CtaLink;
   highlights: Highlight[];
   footerNote?: string;
+  children?: React.ReactNode;
 }
 
 export function MarketingPage({
@@ -38,6 +39,7 @@ export function MarketingPage({
   secondaryCta,
   highlights,
   footerNote,
+  children,
 }: MarketingPageProps) {
   return (
     <div className="relative min-h-screen overflow-hidden bg-slate-950 text-white">
@@ -102,6 +104,8 @@ export function MarketingPage({
               </div>
             ))}
           </div>
+
+          {children ? <div className="mt-24">{children}</div> : null}
 
           {footerNote ? (
             <p className="mt-16 max-w-3xl text-sm uppercase tracking-[0.3em] text-slate-400">
