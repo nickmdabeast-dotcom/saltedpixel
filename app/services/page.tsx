@@ -11,7 +11,7 @@ export default function ServicesPage() {
       eyebrow="What We Deliver"
       title="Services designed to work together from day one"
       description="Pick individual solutions or let us orchestrate the full SaltedPixel system. Every engagement is strategy-led, transparent, and focused on measurable outcomes."
-      primaryCta={{ label: "Start a project", href: "/get-started" }}
+      primaryCta={{ label: "Start a project", href: "/contact" }}
       secondaryCta={{ label: "Back to home", href: "/", icon: <Home className="h-5 w-5" /> }}
       highlights={[
         {

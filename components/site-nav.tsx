@@ -44,7 +44,7 @@ export function SiteNav() {
           asChild
           className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
         >
-          <Link href="/get-started" className="flex items-center gap-2">
+          <Link href="/contact" className="flex items-center gap-2">
             Get Started
             <ArrowRight className="h-4 w-4" />
           </Link>
