@@ -11,7 +11,7 @@ export default function ConsultationPage() {
       eyebrow="Free Strategy Session"
       title="Get actionable insights before you ever sign on"
       description="Our consultation is a collaborative workshop where we audit your digital presence and highlight quick wins. You'll walk away with prioritized recommendations whether or not we work together."
-      primaryCta={{ label: "Reserve your consultation", href: "/get-started" }}
+      primaryCta={{ label: "Reserve your consultation", href: "/contact" }}
       secondaryCta={{ label: "Back to home", href: "/", icon: <Home className="h-5 w-5" /> }}
       highlights={[
         {
