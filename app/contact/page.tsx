@@ -1,22 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Clock, Headset, Home, MessageSquare, Send } from "lucide-react";
+import { useForm, ValidationError } from "@formspree/react";
 
 import MarketingPage from "@/components/marketing-page";
 
-export default function ContactPage() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+const CONTACT_EMAIL = "outreach@saltedpixel.com";
+const CONTACT_PHONE_DISPLAY = "4752986091";
+const CONTACT_PHONE_PLAIN = "4752986091";
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 800);
-  };
+export default function ContactPage() {
+  const [state, handleSubmit] = useForm("mldpopab");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (state.succeeded) {
+      formRef.current?.reset();
+    }
+  }, [state.succeeded]);
 
   return (
     <MarketingPage
@@ -42,7 +44,7 @@ export default function ContactPage() {
           description: "Expect a thoughtful reply or meeting invite within 24 hours, often much faster."
         }
       ]}
-      footerNote="Prefer text? Add (555) 123-4567 to your contacts—SMS automations coming soon."
+      footerNote={`Prefer text? Add ${CONTACT_PHONE_DISPLAY} to your contacts—SMS automations coming soon.`}
     >
       <section
         id="contact-form"
@@ -60,7 +62,7 @@ export default function ContactPage() {
               steps.
             </p>
           </div>
-          <form className="grid gap-6" onSubmit={handleSubmit}>
+          <form ref={formRef} className="grid gap-6" onSubmit={handleSubmit}>
             <div className="grid gap-6 sm:grid-cols-2">
               <label className="group flex flex-col gap-2 text-sm font-medium text-slate-200">
                 Full name
@@ -80,6 +82,12 @@ export default function ContactPage() {
                   required
                   placeholder="you@company.com"
                   className="rounded-xl border border-white/10 bg-slate-900/60 px-4 py-3 text-base text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40"
+                />
+                <ValidationError
+                  prefix="Email"
+                  field="email"
+                  errors={state.errors}
+                  className="text-xs text-rose-300"
                 />
               </label>
             </div>
@@ -112,15 +120,22 @@ export default function ContactPage() {
                 rows={5}
                 className="rounded-xl border border-white/10 bg-slate-900/60 px-4 py-3 text-base text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40"
               />
+              <ValidationError
+                prefix="Message"
+                field="message"
+                errors={state.errors}
+                className="text-xs text-rose-300"
+              />
             </label>
             <button
               type="submit"
+              disabled={state.submitting}
               className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-3 text-base font-semibold text-white shadow-lg transition hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500/60"
             >
-              {isSubmitting ? "Sending..." : isSubmitted ? "Message sent" : "Send message"}
+              {state.submitting ? "Sending..." : state.succeeded ? "Message sent" : "Send message"}
               <Send className="h-5 w-5" />
             </button>
-            {isSubmitted ? (
+            {state.succeeded ? (
               <p className="text-sm text-slate-300">
                 Thanks for reaching out! Someone from the Salted Pixel team will respond within one business day.
               </p>
@@ -146,7 +161,7 @@ export default function ContactPage() {
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
             <p className="text-xs uppercase tracking-[0.4em] text-slate-400">Need an intro call?</p>
             <p className="mt-3 text-sm text-slate-200">
-              Email <a href="mailto:hello@saltedpixel.com" className="text-blue-300 underline decoration-blue-500/60 underline-offset-4 hover:text-blue-200">hello@saltedpixel.com</a> or call (555) 123-4567 for an immediate response.
+              Email <a href={`mailto:${CONTACT_EMAIL}`} className="text-blue-300 underline decoration-blue-500/60 underline-offset-4 hover:text-blue-200">{CONTACT_EMAIL}</a> or call <a href={`tel:${CONTACT_PHONE_PLAIN}`} className="text-blue-300 underline decoration-blue-500/60 underline-offset-4 hover:text-blue-200">{CONTACT_PHONE_DISPLAY}</a> for an immediate response.
             </p>
           </div>
         </aside>
