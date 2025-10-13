@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Clock, Headset, Home, MessageSquare, Send } from "lucide-react";
+import { useForm, ValidationError } from "@formspree/react";
 
 import MarketingPage from "@/components/marketing-page";
 
@@ -10,41 +11,14 @@ const CONTACT_PHONE_DISPLAY = "4752986091";
 const CONTACT_PHONE_PLAIN = "4752986091";
 
 export default function ContactPage() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [state, handleSubmit] = useForm("mldpopab");
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const formData = new FormData(form);
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      const name = formData.get("name")?.toString().trim();
-      const email = formData.get("email")?.toString().trim();
-      const company = formData.get("company")?.toString().trim();
-      const timeline = formData.get("timeline")?.toString().trim();
-      const message = formData.get("message")?.toString().trim();
-      const subject = name ? `New contact from ${name}` : "New contact form submission";
-      const bodyLines = [
-        name ? `Name: ${name}` : null,
-        email ? `Email: ${email}` : null,
-        company ? `Company: ${company}` : null,
-        timeline ? `Ideal launch window: ${timeline}` : null,
-        message ? `Project goals:\n${message}` : null,
-      ].filter(Boolean);
-      const searchParams = new URLSearchParams();
-      searchParams.set("subject", subject);
-      if (bodyLines.length > 0) {
-        searchParams.set("body", bodyLines.join("\n\n"));
-      }
-      const baseMailto = `mailto:${CONTACT_EMAIL}`;
-      const mailtoLink = searchParams.toString() ? `${baseMailto}?${searchParams.toString()}` : baseMailto;
-      window.location.href = mailtoLink;
-      form.reset();
-    }, 800);
-  };
+  useEffect(() => {
+    if (state.succeeded) {
+      formRef.current?.reset();
+    }
+  }, [state.succeeded]);
 
   return (
     <MarketingPage
@@ -88,7 +62,7 @@ export default function ContactPage() {
               steps.
             </p>
           </div>
-          <form className="grid gap-6" onSubmit={handleSubmit}>
+          <form ref={formRef} className="grid gap-6" onSubmit={handleSubmit}>
             <div className="grid gap-6 sm:grid-cols-2">
               <label className="group flex flex-col gap-2 text-sm font-medium text-slate-200">
                 Full name
@@ -108,6 +82,12 @@ export default function ContactPage() {
                   required
                   placeholder="you@company.com"
                   className="rounded-xl border border-white/10 bg-slate-900/60 px-4 py-3 text-base text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40"
+                />
+                <ValidationError
+                  prefix="Email"
+                  field="email"
+                  errors={state.errors}
+                  className="text-xs text-rose-300"
                 />
               </label>
             </div>
@@ -140,15 +120,22 @@ export default function ContactPage() {
                 rows={5}
                 className="rounded-xl border border-white/10 bg-slate-900/60 px-4 py-3 text-base text-white outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-500/40"
               />
+              <ValidationError
+                prefix="Message"
+                field="message"
+                errors={state.errors}
+                className="text-xs text-rose-300"
+              />
             </label>
             <button
               type="submit"
+              disabled={state.submitting}
               className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-3 text-base font-semibold text-white shadow-lg transition hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500/60"
             >
-              {isSubmitting ? "Sending..." : isSubmitted ? "Message sent" : "Send message"}
+              {state.submitting ? "Sending..." : state.succeeded ? "Message sent" : "Send message"}
               <Send className="h-5 w-5" />
             </button>
-            {isSubmitted ? (
+            {state.succeeded ? (
               <p className="text-sm text-slate-300">
                 Thanks for reaching out! Someone from the Salted Pixel team will respond within one business day.
               </p>
