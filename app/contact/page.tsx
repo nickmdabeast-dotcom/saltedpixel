@@ -5,16 +5,44 @@ import { Clock, Headset, Home, MessageSquare, Send } from "lucide-react";
 
 import MarketingPage from "@/components/marketing-page";
 
+const CONTACT_EMAIL = "outreach@saltedpixel.com";
+const CONTACT_PHONE_DISPLAY = "4752986091";
+const CONTACT_PHONE_PLAIN = "4752986091";
+
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
     setIsSubmitting(true);
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
+      const name = formData.get("name")?.toString().trim();
+      const email = formData.get("email")?.toString().trim();
+      const company = formData.get("company")?.toString().trim();
+      const timeline = formData.get("timeline")?.toString().trim();
+      const message = formData.get("message")?.toString().trim();
+      const subject = name ? `New contact from ${name}` : "New contact form submission";
+      const bodyLines = [
+        name ? `Name: ${name}` : null,
+        email ? `Email: ${email}` : null,
+        company ? `Company: ${company}` : null,
+        timeline ? `Ideal launch window: ${timeline}` : null,
+        message ? `Project goals:\n${message}` : null,
+      ].filter(Boolean);
+      const searchParams = new URLSearchParams();
+      searchParams.set("subject", subject);
+      if (bodyLines.length > 0) {
+        searchParams.set("body", bodyLines.join("\n\n"));
+      }
+      const baseMailto = `mailto:${CONTACT_EMAIL}`;
+      const mailtoLink = searchParams.toString() ? `${baseMailto}?${searchParams.toString()}` : baseMailto;
+      window.location.href = mailtoLink;
+      form.reset();
     }, 800);
   };
 
@@ -42,7 +70,7 @@ export default function ContactPage() {
           description: "Expect a thoughtful reply or meeting invite within 24 hours, often much faster."
         }
       ]}
-      footerNote="Prefer text? Add (555) 123-4567 to your contacts—SMS automations coming soon."
+      footerNote={`Prefer text? Add ${CONTACT_PHONE_DISPLAY} to your contacts—SMS automations coming soon.`}
     >
       <section
         id="contact-form"
@@ -146,7 +174,7 @@ export default function ContactPage() {
           <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
             <p className="text-xs uppercase tracking-[0.4em] text-slate-400">Need an intro call?</p>
             <p className="mt-3 text-sm text-slate-200">
-              Email <a href="mailto:hello@saltedpixel.com" className="text-blue-300 underline decoration-blue-500/60 underline-offset-4 hover:text-blue-200">hello@saltedpixel.com</a> or call (555) 123-4567 for an immediate response.
+              Email <a href={`mailto:${CONTACT_EMAIL}`} className="text-blue-300 underline decoration-blue-500/60 underline-offset-4 hover:text-blue-200">{CONTACT_EMAIL}</a> or call <a href={`tel:${CONTACT_PHONE_PLAIN}`} className="text-blue-300 underline decoration-blue-500/60 underline-offset-4 hover:text-blue-200">{CONTACT_PHONE_DISPLAY}</a> for an immediate response.
             </p>
           </div>
         </aside>
