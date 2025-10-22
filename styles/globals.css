@@ -2,4 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body { height: 100%; background-color: #0f172a; }
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  height: 100%;
+  background-color: #0f172a;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont);
+}
+
+.skip-link {
+  position: absolute;
+  top: -200px;
+  left: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: #1e293b;
+  color: #f8fafc;
+  border-radius: 9999px;
+  z-index: 1000;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: 1rem;
+  outline: 3px solid #38bdf8;
+  outline-offset: 4px;
+}
+
+*:focus-visible {
+  outline: 3px solid #38bdf8;
+  outline-offset: 4px;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #c084fc;
+  outline-offset: 4px;
+}
