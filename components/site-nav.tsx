@@ -11,7 +11,7 @@ export function SiteNav() {
     <nav className="relative z-50 flex items-center justify-between p-6" aria-label="Primary">
       <motion.div
         className="flex items-center space-x-8"
-        initial={{ opacity: 0, x: -20 }}
+        initial={false}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
       >
@@ -36,7 +36,7 @@ export function SiteNav() {
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, x: 20 }}
+        initial={false}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6, delay: 0.4 }}
       >

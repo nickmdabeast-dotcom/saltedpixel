@@ -74,7 +74,7 @@ function ServiceItem({ icon, title, description, delay }: ServiceItemProps) {
   return (
     <motion.div
       className="group flex flex-col items-center rounded-xl border border-white/10 bg-white/5 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay }}
     >
@@ -102,7 +102,7 @@ function ProofPoint({ icon, label, description, delay }: ProofPointProps) {
   return (
     <motion.div
       className="flex flex-col rounded-xl border border-white/10 bg-white/5 p-6 text-left transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:bg-white/10"
-      initial={{ opacity: 0, y: 20 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay }}
     >
@@ -197,10 +197,10 @@ function SaltedPixelWebsite() {
 
       <main id="page-content" className="relative z-10">
         <section ref={sectionRef} className="container mx-auto px-4 pb-32 pt-20">
-          <motion.div className="mx-auto max-w-4xl text-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+          <motion.div className="mx-auto max-w-4xl text-center" initial={false} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
             <motion.div
               className="mx-auto mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm"
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
@@ -210,7 +210,7 @@ function SaltedPixelWebsite() {
 
             <motion.h1
               className="mb-8 text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl"
-              initial={{ opacity: 0, y: 30 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
@@ -222,7 +222,7 @@ function SaltedPixelWebsite() {
 
             <motion.p
               className="mx-auto mb-12 max-w-3xl text-xl text-gray-300 leading-relaxed"
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
             >
@@ -231,7 +231,7 @@ function SaltedPixelWebsite() {
 
             <motion.div
               className="flex flex-col items-center justify-center gap-6 sm:flex-row"
-              initial={{ opacity: 0, y: 20 }}
+              initial={false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1 }}
             >
@@ -263,8 +263,8 @@ function SaltedPixelWebsite() {
         <section className="container mx-auto px-4 py-20" aria-label="Core Services">
           <motion.div
             className="mb-16 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            initial={false}
+            animate={isInView ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-4xl font-bold text-white md:text-5xl">
@@ -287,8 +287,8 @@ function SaltedPixelWebsite() {
         <section ref={proofRef} className="container mx-auto px-4 py-20" aria-label="Proof Points">
           <motion.div
             className="mb-16 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isProofInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            initial={false}
+            animate={isProofInView ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-4xl font-bold text-white md:text-5xl">Proof we move fast with you</h2>
@@ -307,8 +307,8 @@ function SaltedPixelWebsite() {
         <section className="container mx-auto px-4 py-20" aria-label="Commitments">
           <motion.div
             className="rounded-2xl border border-white/10 bg-gradient-to-r from-blue-600/20 to-purple-600/20 p-12 text-center backdrop-blur"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isProofInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            initial={false}
+            animate={isProofInView ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
             <h3 className="text-3xl font-bold text-white md:text-4xl">Ready to map your growth plan?</h3>
