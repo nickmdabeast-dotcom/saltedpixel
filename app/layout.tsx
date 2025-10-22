@@ -1,20 +1,12 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Script from "next/script";
-import { Manrope } from "next/font/google";
 
 import "./../styles/globals.css";
 
 import JsonLd from "@/components/json-ld";
 import { siteConfig } from "@/lib/site-config";
 import { organizationJsonLd } from "@/lib/structured-data";
-
-const sans = Manrope({
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  display: "swap",
-  variable: "--font-sans",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.baseUrl),
@@ -73,7 +65,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
   return (
-    <html lang="en" className={sans.variable}>
+    <html lang="en" className="font-sans">
       <body className="bg-slate-950 text-white antialiased">
         <a className="skip-link" href="#page-content">
           Skip to content

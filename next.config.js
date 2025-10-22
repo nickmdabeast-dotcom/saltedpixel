@@ -98,8 +98,8 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/:path*/',
-        destination: '/:path*',
+        source: '/:path+/',
+        destination: '/:path+',
         permanent: true,
       },
     ];
