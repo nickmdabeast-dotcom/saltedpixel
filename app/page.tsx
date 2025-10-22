@@ -1,19 +1,19 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform, useInView, useSpring } from "framer-motion";
 import {
   Globe,
   Search,
   Bot,
-  Star, 
-  Users, 
-  TrendingUp, 
+  Star,
+  Users,
+  TrendingUp,
   Award,
   ArrowRight,
   CheckCircle,
-  Sparkles,
   Zap,
   Target,
   BarChart3,
@@ -421,9 +421,13 @@ function SaltedPixelWebsite() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
-              </div>
+              <Image
+                src="/logo.svg"
+                alt="SaltedPixel logo"
+                width={32}
+                height={32}
+                className="h-8 w-8"
+              />
               <span className="text-lg font-bold">SaltedPixel</span>
             </div>
             <div className="text-gray-400 text-sm">
