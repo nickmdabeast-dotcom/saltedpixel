@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="saltedpixelGradient" x1="0" y1="512" x2="512" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4da6ff" />
+      <stop offset="1" stop-color="#b060ff" />
+    </linearGradient>
+    <clipPath id="roundedSquare">
+      <rect width="512" height="512" rx="116" ry="116" />
+    </clipPath>
+    <path
+      id="petal"
+      d="M256 116c42 40 66 86 0 140-66-54-42-100 0-140z"
+    />
+    <path
+      id="leaf"
+      d="M256 174c24 24 34 48 0 80-34-32-24-56 0-80z"
+    />
+  </defs>
+  <g clip-path="url(#roundedSquare)">
+    <rect width="512" height="512" fill="url(#saltedpixelGradient)" />
+    <g fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="256" cy="256" r="36" />
+      <path d="M256 156l52 88-52 88-52-88z" />
+      <path d="M188 224l88-52 88 52-88 52z" />
+    </g>
+    <g fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+      <use href="#petal" />
+      <use href="#petal" transform="rotate(45 256 256)" />
+      <use href="#petal" transform="rotate(90 256 256)" />
+      <use href="#petal" transform="rotate(135 256 256)" />
+      <use href="#petal" transform="rotate(180 256 256)" />
+      <use href="#petal" transform="rotate(225 256 256)" />
+      <use href="#petal" transform="rotate(270 256 256)" />
+      <use href="#petal" transform="rotate(315 256 256)" />
+    </g>
+    <g fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">
+      <use href="#leaf" />
+      <use href="#leaf" transform="rotate(45 256 256)" />
+      <use href="#leaf" transform="rotate(90 256 256)" />
+      <use href="#leaf" transform="rotate(135 256 256)" />
+      <use href="#leaf" transform="rotate(180 256 256)" />
+      <use href="#leaf" transform="rotate(225 256 256)" />
+      <use href="#leaf" transform="rotate(270 256 256)" />
+      <use href="#leaf" transform="rotate(315 256 256)" />
+    </g>
+    <g fill="#ffffff">
+      <circle cx="256" cy="92" r="10" />
+      <circle cx="256" cy="420" r="10" />
+      <circle cx="92" cy="256" r="10" />
+      <circle cx="420" cy="256" r="10" />
+      <circle cx="150" cy="150" r="9" />
+      <circle cx="362" cy="150" r="9" />
+      <circle cx="150" cy="362" r="9" />
+      <circle cx="362" cy="362" r="9" />
+    </g>
+    <g fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity="0.75">
+      <path d="M256 60l48 48-48 48-48-48z" />
+      <path d="M256 356l48 48-48 48-48-48z" />
+      <path d="M108 208l48 48-48 48-48-48z" />
+      <path d="M404 208l48 48-48 48-48-48z" />
+    </g>
+  </g>
+</svg>
