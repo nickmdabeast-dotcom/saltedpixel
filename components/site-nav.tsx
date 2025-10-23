@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -16,8 +17,14 @@ export function SiteNav() {
         transition={{ duration: 0.6 }}
       >
         <div className="flex items-center space-x-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-blue-400 to-purple-500">
-            <Sparkles className="h-6 w-6 text-white" />
+          <div className="relative h-10 w-10">
+            <Image
+              src="https://res.cloudinary.com/dqbxmbzhj/image/upload/v1761253474/image__1_-removebg-preview_imgupscaler.ai_v1_Fast__2K_wjb0gs.png"
+              alt="SaltedPixel logo"
+              fill
+              className="object-contain"
+              priority
+            />
           </div>
           <span className="text-xl font-bold">SaltedPixel</span>
         </div>
