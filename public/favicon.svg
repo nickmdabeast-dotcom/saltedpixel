@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <clipPath id="circleClip">
+      <circle cx="256" cy="256" r="236" />
+    </clipPath>
+  </defs>
+  <circle cx="256" cy="256" r="256" fill="#ffffff" />
+  <image
+    href="https://res.cloudinary.com/dqbxmbzhj/image/upload/v1761253474/image__1_-removebg-preview_imgupscaler.ai_v1_Fast__2K_wjb0gs.png"
+    width="512"
+    height="512"
+    preserveAspectRatio="xMidYMid slice"
+    clip-path="url(#circleClip)"
+  />
+</svg>
