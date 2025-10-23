@@ -2,18 +2,18 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useScroll, useTransform, useInView, useSpring } from "framer-motion";
 import {
   Globe,
   Search,
   Bot,
-  Star, 
-  Users, 
-  TrendingUp, 
+  Star,
+  Users,
+  TrendingUp,
   Award,
   ArrowRight,
   CheckCircle,
-  Sparkles,
   Zap,
   Target,
   BarChart3,
@@ -421,8 +421,14 @@ function SaltedPixelWebsite() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-white" />
+              <div className="relative h-8 w-8">
+                <Image
+                  src="https://res.cloudinary.com/dqbxmbzhj/image/upload/v1761253474/image__1_-removebg-preview_imgupscaler.ai_v1_Fast__2K_wjb0gs.png"
+                  alt="SaltedPixel logo"
+                  fill
+                  className="object-contain"
+                  sizes="32px"
+                />
               </div>
               <span className="text-lg font-bold">SaltedPixel</span>
             </div>
