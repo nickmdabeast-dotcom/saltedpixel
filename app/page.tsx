@@ -309,9 +309,9 @@ function SaltedPixelWebsite() {
               size="lg"
               className="border-white/20 text-white hover:bg-white/10 px-8 py-4 text-lg"
             >
-              <Link href="/work" className="flex items-center gap-2">
+              <Link href="/contact#contact-form" className="flex items-center gap-2">
                 <Star className="w-5 h-5 text-blue-300" />
-                View Our Work
+                Send Us an Email
               </Link>
             </Button>
           </motion.div>

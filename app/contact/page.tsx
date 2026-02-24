@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { Clock, Headset, Home, MessageSquare, Send } from "lucide-react";
 import { useForm, ValidationError } from "@formspree/react";
+import { useRouter } from "next/navigation";
 
 import MarketingPage from "@/components/marketing-page";
 
@@ -10,15 +11,29 @@ const CONTACT_EMAIL = "outreach@saltedpixel.com";
 const CONTACT_PHONE_DISPLAY = "4752986091";
 const CONTACT_PHONE_PLAIN = "4752986091";
 
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+    __leadEventTracked?: boolean;
+  }
+}
+
 export default function ContactPage() {
   const [state, handleSubmit] = useForm("mldpopab");
   const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (state.succeeded) {
+      if (typeof window !== "undefined" && !window.__leadEventTracked && typeof window.fbq === "function") {
+        window.fbq("track", "Lead");
+        window.__leadEventTracked = true;
+      }
+
       formRef.current?.reset();
+      router.push("/thank-you");
     }
-  }, [state.succeeded]);
+  }, [router, state.succeeded]);
 
   return (
     <MarketingPage
