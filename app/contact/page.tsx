@@ -3,7 +3,6 @@
 import React, { useEffect, useRef } from "react";
 import { Clock, Headset, Home, MessageSquare, Send } from "lucide-react";
 import { useForm, ValidationError } from "@formspree/react";
-import { useRouter } from "next/navigation";
 
 import MarketingPage from "@/components/marketing-page";
 
@@ -21,7 +20,6 @@ declare global {
 export default function ContactPage() {
   const [state, handleSubmit] = useForm("mldpopab");
   const formRef = useRef<HTMLFormElement>(null);
-  const router = useRouter();
 
   useEffect(() => {
     if (state.succeeded) {
@@ -31,9 +29,9 @@ export default function ContactPage() {
       }
 
       formRef.current?.reset();
-      router.push("/thank-you");
+      window.location.assign("/thank-you");
     }
-  }, [router, state.succeeded]);
+  }, [state.succeeded]);
 
   return (
     <MarketingPage
