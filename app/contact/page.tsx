@@ -10,13 +10,26 @@ const CONTACT_EMAIL = "outreach@saltedpixel.com";
 const CONTACT_PHONE_DISPLAY = "4752986091";
 const CONTACT_PHONE_PLAIN = "4752986091";
 
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+    __leadEventTracked?: boolean;
+  }
+}
+
 export default function ContactPage() {
   const [state, handleSubmit] = useForm("mldpopab");
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     if (state.succeeded) {
+      if (typeof window !== "undefined" && !window.__leadEventTracked && typeof window.fbq === "function") {
+        window.fbq("track", "Lead");
+        window.__leadEventTracked = true;
+      }
+
       formRef.current?.reset();
+      window.location.assign("/thank-you");
     }
   }, [state.succeeded]);
 
